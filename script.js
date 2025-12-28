@@ -1,5 +1,5 @@
 // Number of audio files you have
-const AUDIO_COUNT = 250;
+const AUDIO_COUNT = 10;
 
 // Length of clip in seconds
 const CLIP_LENGTH = 5;
