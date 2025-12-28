@@ -1,26 +1,50 @@
 const CLIP_LENGTH = 5;
+
 const audio = document.getElementById("audio");
-const button = document.getElementById("play");
+const playBtn = document.getElementById("play");
+const revealBtn = document.getElementById("reveal");
+
+const thumbnail = document.getElementById("thumbnail");
+const titleEl = document.getElementById("title");
+const descEl = document.getElementById("description");
+const metadataBox = document.getElementById("metadata");
 
 let audioFiles = [];
+let metadata = {};
+let currentFile = null;
 
-// Load the manifest
-fetch("audios.json")
-  .then(res => res.json())
-  .then(files => {
-    audioFiles = files;
-  });
+// Load manifests
+Promise.all([
+  fetch("audios.json").then(r => r.json()),
+  fetch("episode_data.json").then(r => r.json())
+]).then(([files, data]) => {
+  audioFiles = files;
+  metadata = data;
+});
 
-function randomAudioFile() {
-  const file = audioFiles[Math.floor(Math.random() * audioFiles.length)];
-  return `opus/${file}`;
+// Pick random audio filename
+function randomFile() {
+  return audioFiles[Math.floor(Math.random() * audioFiles.length)];
 }
 
-button.addEventListener("click", () => {
+playBtn.addEventListener("click", () => {
   if (!audioFiles.length) return;
 
-  audio.pause();
-  audio.src = randomAudioFile();
+  // Reset UI
+  revealBtn.disabled = false;
+  metadataBox.hidden = true;
+
+  currentFile = randomFile();
+  audio.src = `opus/${currentFile}`;
+
+  // Show thumbnail immediately (if available)
+  const info = metadata[currentFile];
+  if (info?.thumbnail) {
+    thumbnail.src = info.thumbnail;
+    thumbnail.hidden = false;
+  } else {
+    thumbnail.hidden = true;
+  }
 
   audio.onloadedmetadata = () => {
     const maxStart = Math.max(0, audio.duration - CLIP_LENGTH);
@@ -30,3 +54,17 @@ button.addEventListener("click", () => {
     setTimeout(() => audio.pause(), CLIP_LENGTH * 1000);
   };
 });
+
+revealBtn.addEventListener("click", () => {
+  if (!currentFile) return;
+
+  const info = metadata[currentFile];
+  if (!info) return;
+
+  titleEl.textContent = info.title || "";
+  descEl.textContent = info.description || "";
+
+  metadataBox.hidden = false;
+});
+
+
