@@ -58,11 +58,20 @@ playBtn.addEventListener("click", () => {
 revealBtn.addEventListener("click", () => {
   if (!currentFile) return;
 
-  const info = metadata[currentFile];
-  if (!info) return;
+  const seasonNum = currentFile.substring(1, 3);
+  const epNum = currentFile.substring(7, 9);
 
-  titleEl.textContent = info.title || "";
-  descEl.textContent = info.description || "";
+  const info = metadata[seasonNum];
+  const epFiltered = parseInt(epNum).toString();
+  const result = Object.values(data.info)
+  .find(item => item["Episode Number"] === epFiltered);
+
+  
+  if (!info) return;
+  //const
+
+  titleEl.textContent = result["Episode Title"] || "";
+  descEl.textContent = result"Episode Description"] || "";
 
   metadataBox.hidden = false;
 });
