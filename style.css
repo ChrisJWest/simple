@@ -1,0 +1,44 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: url("bground.jpg") center / cover no-repeat fixed;
+  color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+}
+
+#thumbnail {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+button {
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+}
+
+#metadata {
+  margin-top: 0.5rem;
+}
