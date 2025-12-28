@@ -63,7 +63,7 @@ revealBtn.addEventListener("click", () => {
 
   const info = metadata[seasonNum];
   const epFiltered = parseInt(epNum).toString();
-  const result = Object.values(data.info)
+  const result = Object.values(info.info)
   .find(item => item["Episode Number"] === epFiltered);
 
   
