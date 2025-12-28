@@ -26,6 +26,12 @@ body {
   margin-bottom: 1rem;
 }
 
+#site-title {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto 1rem; /* center + space below */
+}
+
 #episode-thumbnail {
   display: block;        /* not inline */
   width: 100%;           /* fill container width */
